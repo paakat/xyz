@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--| React |-->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!--| Axios |-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--|  |-->
+    <!--|  |-->
+
+  </head>
+  <body>
+
+    <div id="mydiv"></div>
+
+    <script type="text/babel">
+
+/*
+https://www.digitalocean.com/community/tutorials/react-axios-react
+https://levelup.gitconnected.com/all-possible-ways-of-making-an-api-call-in-plain-javascript-c0dee3c11b8b
+
+*/
+
+// src/components/PersonList.js 
+class PersonList extends React.Component 
+{
+  state = {persons: []}
+
+  componentDidMount() 
+  {
+    axios.get(`https://jsonplaceholder.typicode.com/users`).then(response => 
+{
+// console.log(response.headers);
+console.log(response.config);
+console.log(response.data);
+
+const persons = response.data;
+this.setState({ persons });
+
+})
+
+  } // componentDidMount
+
+  render() 
+  {
+    return (
+      <ul>
+        {
+          this.state.persons.map(person => <li key={person.id}>{person.name}</li>)
+        }
+      </ul>
+    )
+  }
+
+} // PersonList
+
+
+// src/app.js
+function App() 
+{
+  return (
+    <div className="App">
+      <PersonList/>
+    </div>
+  )
+} // App 
+
+
+function Hello() 
+{
+  return <h1>Hello World!</h1>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("mydiv"));
+root.render(
+  <React.StrictMode>
+    <App/>
+  </React.StrictMode>
+);
+ 
+
+    </script>
+
+  </body>
+</html>

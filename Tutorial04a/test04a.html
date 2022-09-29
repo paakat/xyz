@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--| React |-->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!--| Axios |-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--| react-bootstrap |-->
+    <!--script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script-->
+    <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!--|  |-->
+
+  </head>
+  <body>
+
+    <div id="mydiv"></div>
+
+    <script type="text/babel">
+
+/*
+https://react-bootstrap.github.io/getting-started/introduction/
+*/ 
+
+const ExampleToast = ({ children }) => 
+{
+  const [show, toggleShow] = React.useState(true);
+
+  return (
+    <ReactBootstrap.Toast show={show} onClose={() => toggleShow(!show)}>
+      <ReactBootstrap.Toast.Header>
+        <strong className="mr-auto">React-Bootstrap</strong>
+      </ReactBootstrap.Toast.Header>
+      <ReactBootstrap.Toast.Body>{children}</ReactBootstrap.Toast.Body>
+    </ReactBootstrap.Toast>
+  );
+};
+
+
+const App02a = () => 
+(
+  <ReactBootstrap.Container className="p-3">
+    <ReactBootstrap.Container className="p-5 mb-4 bg-light rounded-3">
+      <h1 className="header">
+        Welcome To React-Bootstrap
+      </h1>
+      <ExampleToast>
+        We now have Toasts
+        <span role="img" aria-label="tada">
+          🎉
+        </span>
+      </ExampleToast>
+    </ReactBootstrap.Container>
+  </ReactBootstrap.Container>
+);
+
+
+function AutoLayoutExample() {
+  return (
+    <ReactBootstrap.Container>
+      <ReactBootstrap.Row>
+        <ReactBootstrap.Col>1 of 2</ReactBootstrap.Col>
+        <ReactBootstrap.Col>2 of 2</ReactBootstrap.Col>
+      </ReactBootstrap.Row>
+      <ReactBootstrap.Row>
+        <ReactBootstrap.Col>1 of 3</ReactBootstrap.Col>
+        <ReactBootstrap.Col>2 of 3</ReactBootstrap.Col>
+        <ReactBootstrap.Col>3 of 3</ReactBootstrap.Col>
+      </ReactBootstrap.Row>
+    </ReactBootstrap.Container>
+  );
+}
+
+
+function ContainerInsideExample() {
+  return (
+    <ReactBootstrap.Navbar expand="lg" variant="light" bg="light">
+      <ReactBootstrap.Container>
+        <ReactBootstrap.Navbar.Brand href="#">ReactBootstrap.Navbar</ReactBootstrap.Navbar.Brand>
+      </ReactBootstrap.Container>
+    </ReactBootstrap.Navbar>
+  );
+}
+
+
+function ColorSchemesExample() {
+  return (
+    <>
+      <ReactBootstrap.Navbar bg="dark" variant="dark">
+        <ReactBootstrap.Container>
+          <ReactBootstrap.Navbar.Brand href="#home"> Spotifoo </ReactBootstrap.Navbar.Brand>
+          <ReactBootstrap.Nav className="me-auto">
+            <ReactBootstrap.Nav.Link href="#home">Home</ReactBootstrap.Nav.Link>
+            <ReactBootstrap.Nav.Link href="#search">Search</ReactBootstrap.Nav.Link>
+          </ReactBootstrap.Nav>
+        </ReactBootstrap.Container>
+      </ReactBootstrap.Navbar>
+    </>
+  );
+}
+
+
+function StackedExample() {
+  return (
+    <ReactBootstrap.Nav className="flex-column" defaultActiveKey="/home">
+      <ReactBootstrap.Nav.Link href="#home">Spotifoo</ReactBootstrap.Nav.Link>
+      <ReactBootstrap.Nav.Link href="#home">Home</ReactBootstrap.Nav.Link>
+      <ReactBootstrap.Nav.Link href="#search">Search</ReactBootstrap.Nav.Link>
+    </ReactBootstrap.Nav>
+  );
+}
+
+
+function Draft01a()  
+{return(
+  <ReactBootstrap.Container>
+
+    <ReactBootstrap.Row>
+
+      <ReactBootstrap.Col sm={4}> 
+        <h2> h2 </h2>
+      </ReactBootstrap.Col>
+
+
+      <ReactBootstrap.Col sm> 
+        <h2> h2 </h2>
+
+        <ReactBootstrap.Row>
+          <h2> h2 </h2>
+<img src="https://picsum.photos/id/237/100" alt="" />
+        </ReactBootstrap.Row>
+
+        <ReactBootstrap.Row>
+          <h2> h2 </h2>
+<img src="https://github.com/paakat/Assets/blob/main/images/1989.png?raw=tru" alt="" />
+        </ReactBootstrap.Row>
+
+      </ReactBootstrap.Col>
+
+    </ReactBootstrap.Row>
+
+    <ReactBootstrap.Row>
+  <ReactBootstrap.Container fluid>
+      <h2> h2 </h2>
+  </ReactBootstrap.Container>
+    </ReactBootstrap.Row>
+
+
+  </ReactBootstrap.Container>
+);}
+
+
+
+
+// src/components/PersonList.js 
+class PersonList extends React.Component 
+{
+  state = {persons: []}
+
+  componentDidMount() 
+  {
+    axios.get(`https://jsonplaceholder.typicode.com/users`).then(response => 
+{
+// console.log(response.headers);
+console.log(response.config);
+console.log(response.data);
+
+const persons = response.data;
+this.setState({ persons });
+
+})
+
+  } // componentDidMount
+
+  render() 
+  {
+    return (
+      <ul>
+        {
+          this.state.persons.map(person => <li key={person.id}>{person.name}</li>)
+        }
+      </ul>
+    )
+  }
+
+} // PersonList
+
+
+// src/app.js
+function App01a() 
+{
+  return (
+    <div className="App01a">
+      <PersonList/>
+    </div>
+  )
+} // App01a 
+
+
+function Hello() 
+{
+  return <h1>Hello World!</h1>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("mydiv"));
+root.render(
+  <React.StrictMode>
+    <Draft01a/>
+  </React.StrictMode>
+);
+ 
+
+    </script>
+
+  </body>
+</html>
